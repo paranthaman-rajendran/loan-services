@@ -6,13 +6,10 @@ sequenceDiagram
 
     Note right of JS: Initialization and Database Setup
     JS->>FS: Check if .data/my.db exists
-    activate FS
     alt File exists
         FS-->>JS: File exists
-        deactivate FS
     else File does not exist
         FS-->>JS: File does not exist
-        deactivate FS
         JS->>FS: Create directory .data (recursive)
         activate FS
         FS-->>JS: Directory created
@@ -63,21 +60,14 @@ sequenceDiagram
         JS->>FS: open customers.csv
         activate FS
         FS-->>JS: customers.csv file opened
-        deactivate FS
         JS->>JS: Iterate over rows in customers.csv
+        deactivate FS
         loop Each row in CSV
             JS->>DB: INSERT INTO CustomerData
             activate DB
             DB-->>JS: Data inserted
             deactivate DB
         end
-    end
-
-    loop getOptions()
-        JS->>DB: SELECT * FROM Choices
-        activate DB
-        DB-->>JS: Return Choices data
-        deactivate DB
     end
 
     loop processVote(vote)
